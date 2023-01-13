@@ -1,15 +1,18 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+    <div id="app">
+        <nav>
+            <router-link :to="{name: 'home'}">Домашняя</router-link>
+            |
+            <router-link :to="{name: 'users'}">Пользователи</router-link>
+        </nav>
+        <router-view/>
+    </div>
 </template>
 
-<style>
+<style lang="scss">
 #app {
+  overflow: hidden;
+  height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -29,4 +32,5 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>

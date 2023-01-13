@@ -1,12 +1,16 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
 
-import './styles/index.scss'
+import fullNameFilter from './filters/fullName';
 
-Vue.config.productionTip = false
+import './styles/index.scss';
+
+Vue.config.productionTip = false;
+
+Vue.filter('fullName', fullNameFilter);
 
 new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+    router,
+    render: h => h(App)
+}).$mount('#app');
