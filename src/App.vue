@@ -11,7 +11,7 @@
 
 <style lang="scss">
 #app {
-  overflow: hidden;
+  overflow: auto;
   height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -4,13 +4,13 @@
         <div v-show="loading" class="loader-wrapper">
             <loader-base/>
         </div>
-        <div v-show="!loading">
+        <div class="user-page__content" v-show="!loading">
             <button @click="fetchUsers">Получить пользователей</button>
-            <div>
+            <section class="user-page__cards">
                 <div v-for="user in users" :key="user.id">
-                    {{ user.firstName | fullName(user.lastName) }}
+                    <user-card :user="user"/>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 </template>
@@ -20,10 +20,11 @@ import Vue from 'vue';
 import {fetchRandomAmountOfUsers} from '@/services';
 import {User} from '@/interfaces/User.js';
 import LoaderBase from '@/components/UI/LoaderBase.vue';
+import UserCard from '@/components/UserCard.vue';
 
 export default Vue.extend({
     name: 'PeoplePage',
-    components: {LoaderBase},
+    components: {UserCard, LoaderBase},
     data(): {
         users: User[],
         loading: boolean,
@@ -51,6 +52,18 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &__content {
+    width: 100%;
+  }
+
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
 
   .loader-wrapper {
     position: absolute;

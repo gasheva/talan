@@ -1,11 +1,29 @@
 <template>
-<div></div>
+    <div>
+        <label>
+            <input type="text" v-model="">
+        </label>
+    </div>
 </template>
 
-<script>
-export default {
-    name: 'FilterBase'
-};
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
+    name: 'FilterBase',
+    props: {
+        initialValue: {
+            type: String,
+            default: '',
+        }
+    },
+
+    data() {
+        return {
+            value: '',
+        };
+    },
+});
 </script>
 
 <style scoped>
