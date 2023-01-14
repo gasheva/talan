@@ -6,8 +6,9 @@
         </div>
         <div class="user-page__content" v-show="!loading">
             <button @click="fetchUsers">Получить пользователей</button>
+            <filter-base v-model="filterByWord"/>
             <section class="user-page__cards">
-                <div v-for="user in users" :key="user.id">
+                <div v-for="user in filteredUsers" :key="user.id">
                     <user-card :user="user"/>
                 </div>
             </section>
@@ -21,24 +22,35 @@ import {fetchRandomAmountOfUsers} from '@/services';
 import {User} from '@/interfaces/User.js';
 import LoaderBase from '@/components/UI/LoaderBase.vue';
 import UserCard from '@/components/UserCard.vue';
+import FilterBase from '@/components/UI/FilterBase.vue';
+import {filterUserByWord} from '@/utils/userFilter';
 
 export default Vue.extend({
-    name: 'PeoplePage',
-    components: {UserCard, LoaderBase},
+    name: 'UserPage',
+    components: {FilterBase, UserCard, LoaderBase},
     data(): {
         users: User[],
         loading: boolean,
+        filterByWord: string,
     } {
         return {
             users: [],
             loading: false,
+            filterByWord: '',
         };
+    },
+
+    computed: {
+        filteredUsers(): User[] {
+            return this.users.filter((user: User) => filterUserByWord(user, this.filterByWord));
+        }
     },
 
     methods: {
         async fetchUsers(): Promise<void> {
             this.loading = true;
             this.users = await fetchRandomAmountOfUsers();
+            this.filterByWord = '';
             this.loading = false;
         }
     }
@@ -55,6 +67,10 @@ export default Vue.extend({
 
   &__content {
     width: 100%;
+
+    > * {
+      margin-bottom: .5rem;
+    }
   }
 
   &__cards {
@@ -62,7 +78,6 @@ export default Vue.extend({
     flex-wrap: wrap;
     justify-content: center;
     gap: 1.5rem;
-    margin-top: 1rem;
   }
 
   .loader-wrapper {

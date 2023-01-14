@@ -1,7 +1,8 @@
 <template>
     <div>
         <label>
-            <input type="text" v-model="">
+            Фильтр:
+            <input type="text" :value="value" @input="updateValue">
         </label>
     </div>
 </template>
@@ -9,20 +10,25 @@
 <script lang="ts">
 import Vue from 'vue';
 
+const debounce = require('lodash.debounce');
+
 export default Vue.extend({
     name: 'FilterBase',
     props: {
-        initialValue: {
+        value: {
             type: String,
-            default: '',
         }
     },
 
-    data() {
-        return {
-            value: '',
-        };
-    },
+    methods: {
+        updateValue: debounce(function (this: any, event: any) {
+            const updatedValue = event.target.value.trim();
+            if (this.value !== updatedValue) {
+                this.$emit('input', updatedValue);
+
+            }
+        }, 1000)
+    }
 });
 </script>
 
